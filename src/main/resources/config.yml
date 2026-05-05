@@ -1,0 +1,79 @@
+general:
+  sidebar-enabled: true
+  save-interval-seconds: 60
+  enabled-worlds: []
+  use-all-worlds-when-empty: true
+  history-size: 6
+  repeat-penalty-threshold: 2
+  repeat-penalty-enabled: true
+  custom-food-support: true
+
+balanced-meal:
+  enabled: true
+  required-categories:
+    - CARB
+    - PROTEIN
+    - PRODUCE
+  lookback-items: 4
+  base-score-threshold: 3
+  buff-duration-seconds: 600
+  allow-stacking: true
+  sidebar-label: '&aBalanced Meal'
+  message: '&aBalanced meal achieved! You feel nourished.'
+
+penalties:
+  enabled: true
+  trigger-duplicate-count: 3
+  message: '&eYour diet is becoming repetitive.'
+  effects:
+    - type: HUNGER
+      duration-seconds: 45
+      amplifier: 0
+
+buffs:
+  balanced:
+    - type: REGENERATION
+      duration-seconds: 30
+      amplifier: 0
+    - type: ABSORPTION
+      duration-seconds: 120
+      amplifier: 0
+    - type: SATURATION
+      duration-seconds: 4
+      amplifier: 0
+
+categories:
+  CARB:
+    - BREAD
+    - BAKED_POTATO
+    - POTATO
+    - PUMPKIN_PIE
+    - COOKED_RABBIT
+  PROTEIN:
+    - COOKED_BEEF
+    - COOKED_PORKCHOP
+    - COOKED_CHICKEN
+    - COOKED_MUTTON
+    - COOKED_COD
+    - COOKED_SALMON
+    - RABBIT_STEW
+  PRODUCE:
+    - APPLE
+    - CARROT
+    - BEETROOT
+    - SWEET_BERRIES
+    - GLOW_BERRIES
+    - MELON_SLICE
+
+custom-foods:
+  protein_bar:
+    category: PROTEIN
+  fruit_mix:
+    category: PRODUCE
+  rice_bowl:
+    category: CARB
+
+messages:
+  prefix: '&6[AngelSustenance] &r'
+  status: '&eDiet Score: &f{score} &7| &eBalanced: &f{balanced} &7| &eLast Food: &f{food}'
+  reload: '&aAngelSustenance reloaded.'

@@ -1,0 +1,17 @@
+name: AngelSustenance
+version: '1.0.0'
+main: me.angelique.angelSustenance.AngelSustenance
+api-version: '1.21'
+description: Balanced meal and healthy diet bonus system for Paper.
+authors: [Aevienne]
+commands:
+  sustenance:
+    description: View sustenance status and admin controls
+    usage: /sustenance [status|check|reload]
+permissions:
+  angelsustenance.admin:
+    description: Access to admin sustenance commands
+    default: op
+  angelsustenance.use:
+    description: Access to sustenance status commands
+    default: true
