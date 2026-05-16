@@ -11,10 +11,11 @@ general:
 balanced-meal:
   enabled: true
   required-categories:
-    - CARB
     - PROTEIN
-    - PRODUCE
-  lookback-items: 4
+    - GRAINS
+    - FRUITS
+    - VEGETABLES
+  lookback-items: 6
   base-score-threshold: 3
   buff-duration-seconds: 600
   allow-stacking: true
@@ -43,12 +44,6 @@ buffs:
       amplifier: 0
 
 categories:
-  CARB:
-    - BREAD
-    - BAKED_POTATO
-    - POTATO
-    - PUMPKIN_PIE
-    - COOKED_RABBIT
   PROTEIN:
     - COOKED_BEEF
     - COOKED_PORKCHOP
@@ -56,24 +51,43 @@ categories:
     - COOKED_MUTTON
     - COOKED_COD
     - COOKED_SALMON
+    - COOKED_RABBIT
     - RABBIT_STEW
-  PRODUCE:
+    - EGG
+  GRAINS:
+    - BREAD
+    - BAKED_POTATO
+    - PUMPKIN_PIE
+    - COOKIE
+    - CAKE
+  FRUITS:
     - APPLE
-    - CARROT
-    - BEETROOT
     - SWEET_BERRIES
     - GLOW_BERRIES
     - MELON_SLICE
+    - CHORUS_FRUIT
+  VEGETABLES:
+    - CARROT
+    - BEETROOT
+    - POTATO
+    - BEETROOT_SOUP
+    - MUSHROOM_STEW
+    - SUSPICIOUS_STEW
 
 custom-foods:
   protein_bar:
     category: PROTEIN
   fruit_mix:
-    category: PRODUCE
+    category: FRUITS
   rice_bowl:
-    category: CARB
+    category: GRAINS
+
+season:
+  winter-blocked-categories:
+    - FRUITS
 
 messages:
   prefix: '&6[AngelSustenance] &r'
   status: '&eDiet Score: &f{score} &7| &eBalanced: &f{balanced} &7| &eLast Food: &f{food}'
   reload: '&aAngelSustenance reloaded.'
+  winter-blocked: '&c{food} is out of season. Fresh fruit is unavailable in winter.'

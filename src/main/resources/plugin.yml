@@ -2,6 +2,7 @@ name: AngelSustenance
 version: '1.0.0'
 main: me.angelique.angelSustenance.AngelSustenance
 api-version: '1.21'
+softdepend: [AngelNCore]
 description: Balanced meal and healthy diet bonus system for Paper.
 authors: [Aevienne]
 commands:

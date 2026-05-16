@@ -7,6 +7,9 @@ import me.angelique.angelSustenance.model.FoodCategory;
 import me.angelique.angelSustenance.model.FoodEntry;
 import me.angelique.angelSustenance.model.PlayerDietData;
 import me.angelique.angelSustenance.storage.PlayerDietStorage;
+import me.angelique.angelNCore.events.SeasonChangedEvent;
+import me.angelique.angelNCore.services.NutritionService;
+import me.angelique.angelNCore.services.ServiceRegistry;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -41,6 +44,7 @@ public final class SustenanceService {
     private int saveTaskId = -1;
     private int sidebarTaskId = -1;
     private boolean dirty;
+    private SeasonChangedEvent.Season currentSeason = SeasonChangedEvent.Season.SPRING;
 
     public SustenanceService(AngelSustenance plugin, PluginConfig config, PlayerDietStorage storage) {
         this.plugin = plugin;
@@ -68,6 +72,10 @@ public final class SustenanceService {
         flush();
     }
 
+    public void setCurrentSeason(SeasonChangedEvent.Season season) {
+        this.currentSeason = season;
+    }
+
     public void handleConsume(Player player, ItemStack itemStack) {
         if (player == null || itemStack == null || !config.isWorldEnabled(player.getWorld())) {
             return;
@@ -79,6 +87,13 @@ public final class SustenanceService {
         }
 
         FoodCategory category = config.resolveCategory(foodId);
+
+        if (currentSeason == SeasonChangedEvent.Season.WINTER
+                && config.getWinterBlockedCategories().contains(category)) {
+            player.sendMessage(config.getPrefix() + config.getWinterBlockedMessage()
+                    .replace("{food}", foodId.toLowerCase().replace('_', ' ')));
+            return;
+        }
         PlayerDietData data = diets.computeIfAbsent(player.getUniqueId(), ignored -> new PlayerDietData());
         data.getRecentFoods().addFirst(new FoodEntry(foodId, category, System.currentTimeMillis()));
         while (data.getRecentFoods().size() > config.getHistorySize()) {
@@ -87,6 +102,12 @@ public final class SustenanceService {
 
         int scoreGain = calculateScoreGain(data, foodId, category);
         data.setDietScore(data.getDietScore() + scoreGain);
+
+        NutritionService nutritionService = ServiceRegistry.getNutritionService();
+        if (nutritionService != null && category != FoodCategory.OTHER) {
+            nutritionService.recordMeal(player.getUniqueId(),
+                    NutritionService.FoodCategory.valueOf(category.name()));
+        }
 
         boolean balanced = isBalancedMeal(data);
         data.setBalancedMealActive(balanced);

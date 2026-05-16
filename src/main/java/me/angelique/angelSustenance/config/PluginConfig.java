@@ -41,9 +41,11 @@ public final class PluginConfig {
     private final Map<String, FoodCategory> customFoods = new HashMap<>();
     private final List<ConfiguredEffect> balancedEffects;
     private final List<ConfiguredEffect> penaltyEffects;
+    private final Set<FoodCategory> winterBlockedCategories;
     private final String prefix;
     private final String status;
     private final String reload;
+    private final String winterBlockedMessage;
 
     public PluginConfig(FileConfiguration config) {
         this.sidebarEnabled = config.getBoolean("general.sidebar-enabled", true);
@@ -69,9 +71,12 @@ public final class PluginConfig {
         loadCustomFoods(config.getConfigurationSection("custom-foods"));
         this.balancedEffects = loadEffects(config.getMapList("buffs.balanced"));
         this.penaltyEffects = loadEffects(config.getMapList("penalties.effects"));
+        this.winterBlockedCategories = loadRequiredCategories(config.getStringList("season.winter-blocked-categories"))
+                .stream().collect(java.util.stream.Collectors.toSet());
         this.prefix = color(config.getString("messages.prefix", "&6[AngelSustenance] &r"));
         this.status = color(config.getString("messages.status", "&eDiet Score: &f{score} &7| &eBalanced: &f{balanced} &7| &eLast Food: &f{food}"));
         this.reload = color(config.getString("messages.reload", "&aAngelSustenance reloaded."));
+        this.winterBlockedMessage = color(config.getString("messages.winter-blocked", "&cThis food is out of season."));
     }
 
     private List<FoodCategory> loadRequiredCategories(List<String> names) {
@@ -193,4 +198,6 @@ public final class PluginConfig {
     public String getPrefix() { return prefix; }
     public String getStatus() { return status; }
     public String getReload() { return reload; }
+    public Set<FoodCategory> getWinterBlockedCategories() { return winterBlockedCategories; }
+    public String getWinterBlockedMessage() { return winterBlockedMessage; }
 }

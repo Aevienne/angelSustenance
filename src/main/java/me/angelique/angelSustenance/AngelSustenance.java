@@ -3,6 +3,7 @@ package me.angelique.angelSustenance;
 import me.angelique.angelSustenance.command.SustenanceCommand;
 import me.angelique.angelSustenance.config.PluginConfig;
 import me.angelique.angelSustenance.listener.FoodConsumeListener;
+import me.angelique.angelSustenance.listener.SeasonListener;
 import me.angelique.angelSustenance.service.SustenanceService;
 import me.angelique.angelSustenance.storage.PlayerDietStorage;
 import org.bukkit.Bukkit;
@@ -37,6 +38,7 @@ public final class AngelSustenance extends JavaPlugin {
         this.sustenanceService.initialize();
 
         Bukkit.getPluginManager().registerEvents(new FoodConsumeListener(pluginConfig, sustenanceService), this);
+        Bukkit.getPluginManager().registerEvents(new SeasonListener(sustenanceService), this);
 
         PluginCommand command = getCommand("sustenance");
         if (command != null) {

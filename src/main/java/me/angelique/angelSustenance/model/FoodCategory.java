@@ -1,8 +1,9 @@
 package me.angelique.angelSustenance.model;
 
 public enum FoodCategory {
-    CARB,
     PROTEIN,
-    PRODUCE,
+    GRAINS,
+    FRUITS,
+    VEGETABLES,
     OTHER
 }
