@@ -7,6 +7,8 @@ import me.angelique.angelSustenance.model.FoodCategory;
 import me.angelique.angelSustenance.model.FoodEntry;
 import me.angelique.angelSustenance.model.PlayerDietData;
 import me.angelique.angelSustenance.storage.PlayerDietStorage;
+import me.angelique.angelNCore.events.EventBus;
+import me.angelique.angelNCore.events.PlayerDietChangedEvent;
 import me.angelique.angelNCore.events.SeasonChangedEvent;
 import me.angelique.angelNCore.services.NutritionService;
 import me.angelique.angelNCore.services.ServiceRegistry;
@@ -121,6 +123,8 @@ public final class SustenanceService {
 
         markDirty();
         refreshSidebar(player);
+
+        EventBus.publish(new PlayerDietChangedEvent(player.getUniqueId(), data.getDietScore(), data.isBalancedMealActive()));
     }
 
     public PlayerDietData getData(Player player) {
