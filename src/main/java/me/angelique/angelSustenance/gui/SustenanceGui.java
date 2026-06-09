@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public final class SustenanceGui {
 
-    public static final String TITLE = TextUtil.color("&8Nutrition &7\u2014 &cDiet Tracker");
+    public static final String TITLE = TextUtil.color("&cDiet Tracker");
     static final int SIZE = 27;
 
     private SustenanceGui() {}
