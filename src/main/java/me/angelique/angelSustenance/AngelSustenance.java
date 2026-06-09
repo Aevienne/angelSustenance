@@ -2,6 +2,8 @@ package me.angelique.angelSustenance;
 
 import me.angelique.angelSustenance.command.SustenanceCommand;
 import me.angelique.angelSustenance.config.PluginConfig;
+import me.angelique.angelSustenance.gui.SustenanceGui;
+import me.angelique.angelSustenance.gui.SustenanceGuiListener;
 import me.angelique.angelSustenance.listener.FoodConsumeListener;
 import me.angelique.angelSustenance.listener.SeasonListener;
 import me.angelique.angelSustenance.service.SustenanceService;
@@ -39,6 +41,7 @@ public final class AngelSustenance extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new FoodConsumeListener(pluginConfig, sustenanceService), this);
         Bukkit.getPluginManager().registerEvents(new SeasonListener(sustenanceService), this);
+        Bukkit.getPluginManager().registerEvents(new SustenanceGuiListener(), this);
 
         PluginCommand command = getCommand("sustenance");
         if (command != null) {
@@ -54,4 +57,6 @@ public final class AngelSustenance extends JavaPlugin {
             sustenanceService.shutdown();
         }
     }
+
+    public SustenanceService getSustenanceService() { return sustenanceService; }
 }

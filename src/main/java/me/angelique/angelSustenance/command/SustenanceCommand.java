@@ -2,6 +2,7 @@ package me.angelique.angelSustenance.command;
 
 import me.angelique.angelSustenance.AngelSustenance;
 import me.angelique.angelSustenance.config.PluginConfig;
+import me.angelique.angelSustenance.gui.SustenanceGui;
 import me.angelique.angelSustenance.model.PlayerDietData;
 import me.angelique.angelSustenance.service.SustenanceService;
 import org.bukkit.Bukkit;
@@ -29,7 +30,16 @@ public final class SustenanceCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 0 || "status".equalsIgnoreCase(args[0])) {
+        if (args.length == 0) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(config.getPrefix() + "/sustenance check <player>");
+                return true;
+            }
+            SustenanceGui.open(player, plugin);
+            return true;
+        }
+
+        if ("status".equalsIgnoreCase(args[0])) {
             if (!(sender instanceof Player player)) {
                 sender.sendMessage(config.getPrefix() + "/sustenance check <player>");
                 return true;
